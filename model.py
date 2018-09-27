@@ -91,13 +91,12 @@ class Actor(nn.Module):
 		:param state: Input state (Torch Variable : [n,state_dim] )
 		:return: Output action (Torch Variable: [n,action_dim] )
 		"""
-		x = F.relu(self.fc1(state))
-		x = F.relu(self.fc2(x))
-		x = F.relu(self.fc3(x))
-		action = F.tanh(self.fc4(x))
+		x = F.relu(self.fc1(state)).float()
+		x = F.relu(self.fc2(x)).float()
+		x = F.relu(self.fc3(x)).float()
+		action = F.tanh(self.fc4(x)).float()
 
-		action = action * self.action_lim
-
+		action = action * np.asscalar(self.action_lim)
 		return action
 
 
